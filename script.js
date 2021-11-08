@@ -9,6 +9,7 @@ let videoElement = document.querySelector("#cameraVideo");
 const downloadPara = document.querySelector("#download");
 const imgGallery = document.querySelector("#img-gallery");
 const imgContainer = document.querySelector(".img-container");
+let canvas = document.querySelector("#canvas");
 
 let videoStream = null;
 let facing = "user";
@@ -20,19 +21,19 @@ if ("mediaDevices" in navigator) {
   turnOffCameraButton.addEventListener("click", turnCameraOff);
   takePictureButton.addEventListener("click", takePicture);
   // cameraFacingButton.addEventListener('click', changeFacing);
-//   startRecordingButton.addEventListener("click", startRecording);
-//   stopRecordingButton.addEventListener("click", stopRecording);
+  //   startRecordingButton.addEventListener("click", startRecording);
+  //   stopRecordingButton.addEventListener("click", stopRecording);
 }
 
 function turnCameraOff() {
-    // Om det inte finns någon videoström, finns det inget att stänga av; dvs. vi är redan klara.
-    if (!videoStream) return;
-  
-    let tracks = videoStream.getTracks();
-    tracks.forEach((track) => track.stop());
-    statusBar.innerHTML = "";
-    toggleCamera();
-  }
+  // Om det inte finns någon videoström, finns det inget att stänga av; dvs. vi är redan klara.
+  if (!videoStream) return;
+
+  let tracks = videoStream.getTracks();
+  tracks.forEach((track) => track.stop());
+  statusBar.innerHTML = "";
+  toggleCamera();
+}
 
 async function turnCameraOn() {
   const constraints = {
@@ -42,6 +43,7 @@ async function turnCameraOn() {
   const md = navigator.mediaDevices;
 
   try {
+    //Access the users webcam
     videoStream = await md.getUserMedia(constraints);
     videoElement.srcObject = videoStream;
     videoElement.addEventListener("loadedmetadata", () => {
@@ -63,19 +65,23 @@ async function takePicture() {
       imgContainer.classList.remove("hide");
       const htmlString = `
         <li class="img-item">
-            <img src="${URL.createObjectURL(blob)}" alt="Taken picture" class="takenPicture" />
+            <img src="${URL.createObjectURL(
+              blob
+            )}" alt="Taken picture" class="takenPicture" />
         </li>`;
-      imgContainer.insertAdjacentHTML('afterbegin', htmlString);
+      imgContainer.insertAdjacentHTML("afterbegin", htmlString);
     } catch (error) {
       console.log("Cant take picture", error);
       statusBar.innerHTML = `Couldn't take picture`;
     }
   } else {
-    statusBar.innerHTML = `Your browser doesn't support this action`;
-    // let videoCanvas = document.createElement('canvas')
-    // videoCanvas.height = video.videoHeight
-    // videoCanvas.width = video.videoWidth
-    // let videoContext = videoCanvas.getContext('2d')
+      try {
+        canvas.getContext("2d").drawImage(cameraVideo, 0, 0, canvas.width, canvas.height);
+        let image_data_url = canvas.toDataURL("image/jpeg");
+      } catch (error) {
+        console.log("Cant take picture", error);
+        statusBar.innerHTML = `Couldn't take picture`;
+      }
   }
 }
 
@@ -83,8 +89,8 @@ function toggleCamera() {
   turnOnCameraButton.classList.toggle("hide");
   turnOffCameraButton.classList.toggle("hide");
   takePictureButton.classList.toggle("hide");
-//   startRecordingButton.classList.toggle("hide");
-//   stopRecordingButton.classList.toggle("hide");
+  //   startRecordingButton.classList.toggle("hide");
+  //   stopRecordingButton.classList.toggle("hide");
 }
 
 // function startRecording() {
@@ -124,8 +130,6 @@ function toggleCamera() {
 //   recorder.stop();
 //   statusBar.innerHTML = ``;
 // }
-
-
 
 // function changeFacing() {
 //   if (facing === "user") {
