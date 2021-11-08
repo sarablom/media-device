@@ -20,19 +20,9 @@ if ("mediaDevices" in navigator) {
   turnOnCameraButton.addEventListener("click", turnCameraOn);
   turnOffCameraButton.addEventListener("click", turnCameraOff);
   takePictureButton.addEventListener("click", takePicture);
-  // cameraFacingButton.addEventListener('click', changeFacing);
+  cameraFacingButton.addEventListener("click", changeFacing);
   //   startRecordingButton.addEventListener("click", startRecording);
   //   stopRecordingButton.addEventListener("click", stopRecording);
-}
-
-function turnCameraOff() {
-  // Om det inte finns någon videoström, finns det inget att stänga av; dvs. vi är redan klara.
-  if (!videoStream) return;
-
-  let tracks = videoStream.getTracks();
-  tracks.forEach((track) => track.stop());
-  statusBar.innerHTML = "";
-  toggleCamera();
 }
 
 async function turnCameraOn() {
@@ -56,6 +46,23 @@ async function turnCameraOn() {
   }
 }
 
+function turnCameraOff() {
+  if (!videoStream) return;
+
+  let tracks = videoStream.getTracks();
+  tracks.forEach((track) => track.stop());
+  statusBar.innerHTML = "";
+  toggleCamera();
+}
+
+function changeFacing() {
+  if (facing === "user") {
+    facing === "environment";
+  } else {
+    facing === "user";
+  }
+}
+
 async function takePicture() {
   if ("ImageCapture" in window) {
     try {
@@ -75,13 +82,15 @@ async function takePicture() {
       statusBar.innerHTML = `Couldn't take picture`;
     }
   } else {
-      try {
-        canvas.getContext("2d").drawImage(cameraVideo, 0, 0, canvas.width, canvas.height);
-        let image_data_url = canvas.toDataURL("image/jpeg");
-      } catch (error) {
-        console.log("Cant take picture", error);
-        statusBar.innerHTML = `Couldn't take picture`;
-      }
+    try {
+      canvas
+        .getContext("2d")
+        .drawImage(cameraVideo, 0, 0, canvas.width, canvas.height);
+        canvas.toDataURL("image/jpeg");
+    } catch (error) {
+      console.log("Cant take picture", error);
+      statusBar.innerHTML = `Couldn't take picture`;
+    }
   }
 }
 
@@ -129,12 +138,4 @@ function toggleCamera() {
 // function stopRecording() {
 //   recorder.stop();
 //   statusBar.innerHTML = ``;
-// }
-
-// function changeFacing() {
-//   if (facing === "user") {
-//     facing === "environment";
-//   } else {
-//     facing === "user";
-//   }
 // }
