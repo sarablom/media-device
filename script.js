@@ -1,9 +1,6 @@
 const turnOnCameraButton = document.querySelector("#turnOnCameraButton");
 const turnOffCameraButton = document.querySelector("#turnOffCameraButton");
 const takePictureButton = document.querySelector("#takePictureButton");
-const cameraFacingButton = document.querySelector("#cameraFacingButton");
-// const startRecordingButton = document.querySelector("#startRecordingButton");
-// const stopRecordingButton = document.querySelector("#stopRecordingButton");
 const statusBar = document.querySelector("#status");
 let videoElement = document.querySelector("#cameraVideo");
 const downloadPara = document.querySelector("#download");
@@ -19,20 +16,16 @@ if ("mediaDevices" in navigator) {
   turnOnCameraButton.addEventListener("click", turnCameraOn);
   turnOffCameraButton.addEventListener("click", turnCameraOff);
   takePictureButton.addEventListener("click", takePicture);
-  // cameraFacingButton.addEventListener('click', changeFacing);
-//   startRecordingButton.addEventListener("click", startRecording);
-//   stopRecordingButton.addEventListener("click", stopRecording);
 }
 
 function turnCameraOff() {
-    // Om det inte finns någon videoström, finns det inget att stänga av; dvs. vi är redan klara.
     if (!videoStream) return;
   
     let tracks = videoStream.getTracks();
     tracks.forEach((track) => track.stop());
     statusBar.innerHTML = "";
     toggleCamera();
-  }
+}
 
 async function turnCameraOn() {
   const constraints = {
@@ -72,10 +65,6 @@ async function takePicture() {
     }
   } else {
     statusBar.innerHTML = `Your browser doesn't support this action`;
-    // let videoCanvas = document.createElement('canvas')
-    // videoCanvas.height = video.videoHeight
-    // videoCanvas.width = video.videoWidth
-    // let videoContext = videoCanvas.getContext('2d')
   }
 }
 
@@ -83,54 +72,4 @@ function toggleCamera() {
   turnOnCameraButton.classList.toggle("hide");
   turnOffCameraButton.classList.toggle("hide");
   takePictureButton.classList.toggle("hide");
-//   startRecordingButton.classList.toggle("hide");
-//   stopRecordingButton.classList.toggle("hide");
 }
-
-// function startRecording() {
-//   if (!videoStream) return;
-
-//   recorder = new MediaRecorder(videoStream);
-//   chunks = [];
-
-//   recorder.addEventListener("dataavailable", (event) => {
-//     if (event.data.size > 0) {
-//       chunks.push(event.data);
-//     }
-//   });
-
-//   recorder.addEventListener("stop", () => {
-//     const masterBlob = new Blob(chunks, { type: "video/webm" });
-//     const url = URL.createObjectURL(masterBlob);
-
-//     const a = document.createElement("a");
-//     a.innerHTML = `Click to download recording`;
-//     a.href = url;
-//     a.download = "Awesome-video.webm";
-//     a.className = "download-link";
-//     downloadPara.appendChild(a);
-
-//     a.addEventListener("click", () => {
-//       downloadPara.innerHTML = "";
-//     });
-//   });
-
-//   downloadPara.innerHTML = "";
-//   statusBar.innerHTML = `Recording in progress`;
-//   recorder.start();
-// }
-
-// function stopRecording() {
-//   recorder.stop();
-//   statusBar.innerHTML = ``;
-// }
-
-
-
-// function changeFacing() {
-//   if (facing === "user") {
-//     facing === "environment";
-//   } else {
-//     facing === "user";
-//   }
-// }
