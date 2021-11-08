@@ -1,6 +1,7 @@
 const turnOnCameraButton = document.querySelector("#turnOnCameraButton");
 const turnOffCameraButton = document.querySelector("#turnOffCameraButton");
 const takePictureButton = document.querySelector("#takePictureButton");
+const cameraFacingButton = document.querySelector("#cameraFacingButton");
 const statusBar = document.querySelector("#status");
 let videoElement = document.querySelector("#cameraVideo");
 const downloadPara = document.querySelector("#download");
@@ -17,15 +18,7 @@ if ("mediaDevices" in navigator) {
   turnOnCameraButton.addEventListener("click", turnCameraOn);
   turnOffCameraButton.addEventListener("click", turnCameraOff);
   takePictureButton.addEventListener("click", takePicture);
-}
-
-function turnCameraOff() {
-    if (!videoStream) return;
-  
-    let tracks = videoStream.getTracks();
-    tracks.forEach((track) => track.stop());
-    statusBar.innerHTML = "";
-    toggleCamera();
+  cameraFacingButton.addEventListener("click", changeFacing);
 }
 
 async function turnCameraOn() {
@@ -49,6 +42,25 @@ async function turnCameraOn() {
   }
 }
 
+function turnCameraOff() {
+  if (!videoStream) return;
+
+  let tracks = videoStream.getTracks();
+  tracks.forEach((track) => track.stop());
+  statusBar.innerHTML = "";
+  toggleCamera();
+}
+
+function changeFacing() {
+  if (facing === "user") {
+    cameraFacingButton.innerHTML = `Environment mode`
+    facing = {exact: "environment"};
+  } else {
+    cameraFacingButton.innerHTML = `User mode`
+    facing = "user";
+  }
+}
+
 async function takePicture() {
   if ("ImageCapture" in window) {
     try {
@@ -68,13 +80,15 @@ async function takePicture() {
       statusBar.innerHTML = `Couldn't take picture`;
     }
   } else {
-      try {
-        canvas.getContext("2d").drawImage(cameraVideo, 0, 0, canvas.width, canvas.height);
-        let image_data_url = canvas.toDataURL("image/jpeg");
-      } catch (error) {
-        console.log("Cant take picture", error);
-        statusBar.innerHTML = `Couldn't take picture`;
-      }
+    try {
+      canvas
+        .getContext("2d")
+        .drawImage(cameraVideo, 0, 0, canvas.width, canvas.height);
+        canvas.toDataURL("image/jpeg");
+    } catch (error) {
+      console.log("Cant take picture", error);
+      statusBar.innerHTML = `Couldn't take picture`;
+    }
   }
 }
 
@@ -82,4 +96,8 @@ function toggleCamera() {
   turnOnCameraButton.classList.toggle("hide");
   turnOffCameraButton.classList.toggle("hide");
   takePictureButton.classList.toggle("hide");
+}
+
+if (window.innerWidth <= 800) {
+    cameraFacingButton.classList.remove("hide");
 }
