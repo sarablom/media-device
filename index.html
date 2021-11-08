@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css" />
     <title>Media devices</title>
   </head>
@@ -17,10 +18,19 @@
       <button class="btn hide" id="cameraFacingButton">Flip camera</button>
     </div>
 
-    <p id="download"></p>
+    <div class="button-panel">
+        <button class="btn hide" id="startRecordingButton">
+            <i class="fas fa-play"></i>
+          </button>
+          <button class="btn hide" id="stopRecordingButton"><i class="fas fa-stop"></i></button>
+          <button class="btn hide" id="pauseRecordingButton"><i class="fas fa-pause"></i></button>
+    </div>
+
+    <p id="status"></p>
 
     <video id="cameraVideo" playsinline></video>
-    <p id="status"></p>
+    <p id="download"></p>
+
 
     <h2 class="hide" id="img-gallery">Image gallery</h2>
     <ul class="img-container hide"></ul>
