@@ -57,9 +57,11 @@ function turnCameraOff() {
 
 function changeFacing() {
   if (facing === "user") {
-    facing === "environment";
+    cameraFacingButton.innerHTML = `Environment mode`
+    facing = {exact: "environment"};
   } else {
-    facing === "user";
+    cameraFacingButton.innerHTML = `User mode`
+    facing = "user";
   }
 }
 
@@ -101,6 +103,11 @@ function toggleCamera() {
   //   startRecordingButton.classList.toggle("hide");
   //   stopRecordingButton.classList.toggle("hide");
 }
+
+if (window.innerWidth <= 800) {
+    cameraFacingButton.classList.remove("hide");
+}
+console.log(window.innerWidth);
 
 // function startRecording() {
 //   if (!videoStream) return;
