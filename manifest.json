@@ -1,0 +1,21 @@
+{
+  "name": "Hollywood watch",
+  "short_name": "Hollywood watch",
+  "background_color": "#262937",
+  "theme_color": "#808FDF",
+  "description":"Keep track of the hotest new movies from Hollywood.",
+  "start_url":"/index.html?utm_source=homescreen",
+  "display": "fullscreen",
+  "icons": [
+    {
+      "src": "assets/Logotyp.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/Logotyp2.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

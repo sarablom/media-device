@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <!-- <link rel="manifest" href="manifest.json"> -->
+    <title>Media devices</title>
+  </head>
+  <body>
+    <h1>Photo booth</h1>
+
+    <div class="btn-container">
+      <button class="btn" id="turnOnCameraButton">Turn camera on</button>
+      <button class="btn hide" id="turnOffCameraButton">Turn camera off</button>
+      <button class="btn hide" id="takePictureButton">Take picture</button>
+      <!-- <button class="btn" id="cameraFacingButton">Camera facing</button> -->
+      <!-- <button class="btn hide" id="startRecordingButton">
+        Start recording
+      </button>
+      <button class="btn hide" id="stopRecordingButton">Stop recording</button> -->
+    </div>
+
+    <p id="download"></p>
+
+    <!-- video och img Src sätts av JS -->
+    <video id="cameraVideo" playsinline></video>
+    <p id="status"></p>
+
+    <h2 class="hide" id="img-gallery">Image gallery</h2>
+    <ul class="img-container hide"></ul>
+
+    <script src="script.js"></script>
+  </body>
+</html>
