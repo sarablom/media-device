@@ -156,23 +156,27 @@ function stopRecording() {
 // }
 
 function countdown() {
-  statusBar.classList. add('animation');
-  statusBar.innerText = 3;
-  let count = 3;
-  const timer = setInterval(() => {
-    count--;  
-    statusBar.innerText = count;
-  }, 1000);
-
-  setTimeout(() => {
-    if (count <= 0) {
+  if (window.innerWidth <= 800) {
+    statusBar.classList. add('animation');
+    statusBar.innerText = 3;
+    let count = 3;
+    const timer = setInterval(() => {
+      count--;  
       statusBar.innerText = count;
-      takePicture();
-      clearInterval(timer);
-    }
-    setTimeout(() => {
-      statusBar.innerText = '';
-      statusBar.classList. remove('animation');
     }, 1000);
-  }, count * 1000);
+  
+    setTimeout(() => {
+      if (count <= 0) {
+        statusBar.innerText = count;
+        takePicture();
+        clearInterval(timer);
+      }
+      setTimeout(() => {
+        statusBar.innerText = '';
+        statusBar.classList. remove('animation');
+      }, 1000);
+    }, count * 1000);
+  } else {
+    takePicture();
+  }
 }
