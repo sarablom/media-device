@@ -4,7 +4,7 @@ const takePictureButton = document.querySelector("#takePictureButton");
 const cameraFacingButton = document.querySelector("#cameraFacingButton");
 const startRecordingButton = document.querySelector("#startRecordingButton");
 const stopRecordingButton = document.querySelector("#stopRecordingButton");
-const pauseRecordingButton = document.querySelector("#pauseRecordingButton");
+// const pauseRecordingButton = document.querySelector("#pauseRecordingButton");
 const statusBar = document.querySelector("#status");
 let videoElement = document.querySelector("#cameraVideo");
 const downloadPara = document.querySelector("#download");
@@ -20,11 +20,11 @@ let chunks = null;
 if ("mediaDevices" in navigator) {
   turnOnCameraButton.addEventListener("click", turnCameraOn);
   turnOffCameraButton.addEventListener("click", turnCameraOff);
-  takePictureButton.addEventListener("click", takePicture);
+  takePictureButton.addEventListener("click", countdown);
   cameraFacingButton.addEventListener("click", changeFacing);
   startRecordingButton.addEventListener("click", startRecording);
   stopRecordingButton.addEventListener("click", stopRecording);
-  pauseRecordingButton.addEventListener("click", pauseRecording);
+  // pauseRecordingButton.addEventListener("click", pauseRecording);
 }
 
 async function turnCameraOn() {
@@ -59,10 +59,10 @@ function turnCameraOff() {
 
 function changeFacing() {
   if (facing === "user") {
-    cameraFacingButton.innerHTML = `Environment mode`;
+    cameraFacingButton.innerHTML = `<i class="fas fa-mountain"></i>`;
     facing = { exact: "environment" };
   } else {
-    cameraFacingButton.innerHTML = `User mode`;
+    cameraFacingButton.innerHTML = `<i class="fas fa-grin-beam"></i>`;
     facing = "user";
   }
 }
@@ -104,7 +104,7 @@ function toggleCamera() {
   takePictureButton.classList.toggle("hide");
   startRecordingButton.classList.toggle("hide");
   stopRecordingButton.classList.toggle("hide");
-  pauseRecordingButton.classList.toggle("hide");
+  // pauseRecordingButton.classList.toggle("hide");
 }
 
 if (window.innerWidth <= 800) {
@@ -149,8 +149,30 @@ function stopRecording() {
   statusBar.innerHTML = ``;
 }
 
-function pauseRecording() {
-    statusBar.innerHTML = `Recording paused`;
-    recorder.pause();
-    recorder.paused();
+// function pauseRecording() {
+//   statusBar.innerHTML = `Recording paused`;
+//   recorder.pause();
+//   recorder.paused();
+// }
+
+function countdown() {
+  statusBar.classList. add('animation');
+  statusBar.innerText = 3;
+  let count = 3;
+  const timer = setInterval(() => {
+    count--;  
+    statusBar.innerText = count;
+  }, 1000);
+
+  setTimeout(() => {
+    if (count <= 0) {
+      statusBar.innerText = count;
+      takePicture();
+      clearInterval(timer);
+    }
+    setTimeout(() => {
+      statusBar.innerText = '';
+      statusBar.classList. remove('animation');
+    }, 1000);
+  }, count * 1000);
 }
