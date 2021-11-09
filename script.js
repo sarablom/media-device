@@ -17,6 +17,13 @@ let facing = "user";
 let recorder = null;
 let chunks = null;
 
+if ("serviceWorker" in navigator) {
+  // Assumes your service worker has file name "sw.js"
+  navigator.serviceWorker.register("sw.js").then((reg) => {
+    console.log("Registration succeeded. Scope is " + reg.scope);
+  });
+}
+
 if ("mediaDevices" in navigator) {
   turnOnCameraButton.addEventListener("click", turnCameraOn);
   turnOffCameraButton.addEventListener("click", turnCameraOff);
@@ -157,14 +164,14 @@ function stopRecording() {
 
 function countdown() {
   if (window.innerWidth >= 800) {
-    statusBar.classList. add('animation');
+    statusBar.classList.add("animation");
     statusBar.innerText = 3;
     let count = 3;
     const timer = setInterval(() => {
-      count--;  
+      count--;
       statusBar.innerText = count;
     }, 1000);
-  
+
     setTimeout(() => {
       if (count <= 0) {
         statusBar.innerText = count;
@@ -172,8 +179,8 @@ function countdown() {
         clearInterval(timer);
       }
       setTimeout(() => {
-        statusBar.innerText = '';
-        statusBar.classList. remove('animation');
+        statusBar.innerText = "";
+        statusBar.classList.remove("animation");
       }, 1000);
     }, count * 1000);
   } else {
