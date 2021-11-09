@@ -156,7 +156,7 @@ function stopRecording() {
 // }
 
 function countdown() {
-  if (window.innerWidth <= 800) {
+  if (window.innerWidth >= 800) {
     statusBar.classList. add('animation');
     statusBar.innerText = 3;
     let count = 3;
